@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podpořme našeho kamaráda</title>
+  <meta name="description" content="Sbírka na podporu kamaráda po vážné nehodě. Každá pomoc má velký význam.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="stage">
+
+    <!-- ===== LEVÝ SLOUPEC: PŘÍBĚH ===== -->
+    <section class="story">
+      <h1 class="story__title">Podpořme našeho kamaráda <span class="heart">❤️</span></h1>
+      <p class="story__lead">
+        Obracíme se na vás s prosbou o pomoc pro našeho blízkého kamaráda,
+        který nedávno utrpěl vážnou nehodu. Čeká ho teď náročná cesta, a
+        proto jsme se rozhodli podat mu pomocnou ruku.
+      </p>
+      <p class="story__body">
+        Jakmile to situace dovolí, budeme vás o dalším vývoji i konkrétní
+        pomoci podrobněji informovat. Pro tuto chvíli jsme pro něj založili
+        transparentní účet, ze kterého budou hrazeny náklady spojené s jeho
+        léčbou.
+      </p>
+    </section>
+
+    <!-- ===== PRAVÝ SLOUPEC: PŘISPĚT (stage) ===== -->
+    <aside class="donate">
+
+      <p class="eyebrow eyebrow--dark">Jak přispět</p>
+
+      <div class="qr">
+        <img src="qr-kod.svg" alt="QR kód pro platbu na transparentní účet" width="200" height="200">
+        <span class="qr__badge">ilustrační</span>
+      </div>
+
+      <p class="donate__hint">Naskenujte v mobilní bankovní aplikaci</p>
+
+      <p class="account">
+        <span class="account__label">Transparentní účet</span>
+        <strong>doplnit číslo účtu</strong>
+      </p>
+
+      <p class="donate__thanks">
+        Každá koruna i sdílení má pro nás obrovský význam. Děkujeme, že jste.
+      </p>
+    </aside>
+
+  </main>
+
+  <!-- ztmavnutí pozadí během show -->
+  <div class="blackout" aria-hidden="true"></div>
+
+  <!-- osvětlovací rig: 10 otočných hlav na tyči; sousední se točí do kruhu na střídačku.
+       --pos = poloha hlavy podél tyče (svisle na PC, vodorovně na telefonu) -->
+  <div class="rig" aria-hidden="true">
+
+    <div class="fixture fixture--cw"  style="--pos:6%"><span class="truss"></span><div class="pan" style="animation-delay:0s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--ccw" style="--pos:15%"><span class="truss"></span><div class="pan" style="animation-delay:-.5s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--cw"  style="--pos:25%"><span class="truss"></span><div class="pan" style="animation-delay:-1s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--ccw" style="--pos:34%"><span class="truss"></span><div class="pan" style="animation-delay:-1.5s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--cw"  style="--pos:43%"><span class="truss"></span><div class="pan" style="animation-delay:-2s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--ccw" style="--pos:53%"><span class="truss"></span><div class="pan" style="animation-delay:-2.5s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--cw"  style="--pos:62%"><span class="truss"></span><div class="pan" style="animation-delay:-3s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--ccw" style="--pos:72%"><span class="truss"></span><div class="pan" style="animation-delay:-3.5s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--cw"  style="--pos:81%"><span class="truss"></span><div class="pan" style="animation-delay:-4s"><span class="lens"></span><span class="beam"></span></div></div>
+    <div class="fixture fixture--ccw" style="--pos:91%"><span class="truss"></span><div class="pan" style="animation-delay:-4.5s"><span class="lens"></span><span class="beam"></span></div></div>
+
+    <!-- tyč: svisle na rozmezí sloupců (PC) / vodorovně na dělící čáře (telefon) -->
+    <div class="pole" aria-hidden="true"></div>
+  </div>
+
+  <!-- truss rám kolem tmavé (QR) části + červené PARy, které svítí dovnitř -->
+  <div class="frame" aria-hidden="true">
+    <div class="redwash"></div>
+    <div class="frame__bar frame__bar--top"></div>
+    <div class="frame__bar frame__bar--bottom"></div>
+    <div class="frame__bar frame__bar--left"></div>
+    <div class="frame__bar frame__bar--right"></div>
+
+    <!-- PARy přímo na truss nosnících: jen červená záře do ztracena, bez kužele -->
+    <div class="par" style="top:7px; left:32%"><span class="par__lens"></span></div>
+    <div class="par" style="top:7px; left:68%"><span class="par__lens"></span></div>
+    <div class="par" style="bottom:7px; left:32%"><span class="par__lens"></span></div>
+    <div class="par" style="bottom:7px; left:68%"><span class="par__lens"></span></div>
+    <div class="par" style="left:7px; top:34%"><span class="par__lens"></span></div>
+    <div class="par" style="left:7px; top:66%"><span class="par__lens"></span></div>
+    <div class="par" style="right:7px; top:34%"><span class="par__lens"></span></div>
+    <div class="par" style="right:7px; top:66%"><span class="par__lens"></span></div>
+  </div>
+
+  <!-- namíření hlav: ob jednu na srdíčko v textu, zbytek doprostřed QR -->
+  <script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var rig = document.querySelector('.rig');
+    var fixtures = Array.prototype.slice.call(document.querySelectorAll('.fixture'));
+    var heart = document.querySelector('.heart');
+    var qr = document.querySelector('.qr');
+    var donate = document.querySelector('.donate');
+    if (!rig || !heart || !qr || !donate) return;
+
+    function center(el) { var r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+
+    // na telefonu jde truss vodorovně na rozhraní světlé a tmavé části = horní hrana .donate
+    function layout() {
+      var y = donate.getBoundingClientRect().top + window.pageYOffset;
+      document.documentElement.style.setProperty('--divide-y', y + 'px');
+    }
+
+    // spin=true → při startu se ještě párkrát otočí a pak dosedne; false → jen dorovná (resize)
+    function point(spin) {
+      var h = center(heart), q = center(qr);
+      fixtures.forEach(function (fx, i) {
+        var pan = fx.querySelector('.pan');
+        var r = fx.getBoundingClientRect();          // čočka = počátek fixture (šířka 0)
+        var t = (i % 2 === 0) ? h : q;               // ob jednu na srdíčko, zbytek na QR
+        var ang = Math.atan2(-(t.x - r.left), (t.y - r.top)) * 180 / Math.PI;
+        var extra = spin ? (fx.classList.contains('fixture--cw') ? 720 : -720) : 0;
+        pan.style.setProperty('--end', (ang + extra) + 'deg');
+      });
+    }
+
+    layout();
+    point(true);
+    rig.classList.add('play');
+    // jakmile hlavy dohýbou (konec show ~3.6 s), rozsvítí se červené PARy a text zčervená
+    setTimeout(function () { document.body.classList.add('reds'); }, 3400);
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(function () { layout(); point(false); }, 120); });
+  })();
+  </script>
+
+</body>
+</html>
