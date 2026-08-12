@@ -162,19 +162,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 20px 50px -30px rgba(0,0,0,0.4);
   animation: qrReveal 3.6s ease forwards;
 }
-.qr img { width: 200px; height: 200px; }
-.qr__badge {
-  position: absolute;
-  top: 8px; right: 8px;
-  font-family: system-ui, sans-serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--sedá);
-  background: var(--papir-2);
-  padding: 3px 8px;
-  border-radius: 999px;
-}
+.qr img { display: block; width: 200px; height: 200px; }
 
 /* ===== ČÍSLO ÚČTU (nasvětlovací štítek) ===== */
 .account {
@@ -202,6 +190,13 @@ img { max-width: 100%; display: block; }
   font-size: 1.05rem;
   color: var(--inkoust);
   letter-spacing: 0.01em;
+}
+.account__iban {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--sedá);
 }
 
 .donate__thanks {
