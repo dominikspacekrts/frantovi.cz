@@ -51,6 +51,36 @@
 
   </main>
 
+  <!-- ===== PRŮBĚŽNÝ STAV SBÍRKY — živá data z transparentního účtu ===== -->
+  <section class="ucet" id="sbirka">
+    <p class="eyebrow">Průběžný stav sbírky</p>
+
+    <p class="ucet__castka" data-ucet="zustatek">&nbsp;</p>
+    <p class="ucet__stav" data-ucet="stav">Načítám aktuální stav účtu…</p>
+
+    <table class="ucet__tabulka" data-ucet="tabulka" hidden>
+      <caption class="ucet__popisek">Poslední příspěvky</caption>
+      <thead>
+        <tr><th scope="col">Datum</th><th scope="col">Dárce</th><th scope="col">Částka</th></tr>
+      </thead>
+      <tbody data-ucet="radky"></tbody>
+    </table>
+
+    <p class="ucet__pozn" data-ucet="pozn" hidden></p>
+
+    <a class="ucet__odkaz" href="https://transparentniucty.moneta.cz/284051001"
+       target="_blank" rel="noopener noreferrer">
+      Zobrazit celý účet u MONETY
+    </a>
+  </section>
+
+  <footer class="paticka">
+    <p>
+      Web vytvořil Dominik Špaček ·
+      <a href="mailto:dominik.spacek@icloud.com">dominik.spacek@icloud.com</a>
+    </p>
+  </footer>
+
   <!-- ztmavnutí pozadí během show -->
   <div class="blackout" aria-hidden="true"></div>
 
@@ -91,6 +121,58 @@
     <div class="par" style="right:7px; top:34%"><span class="par__lens"></span></div>
     <div class="par" style="right:7px; top:66%"><span class="par__lens"></span></div>
   </div>
+
+  <!-- stav sbírky: data tahá /api/ucet z transparentního účtu u MONETY.
+       Když se to nepovede, zůstane jen odkaz — nikdy neukážeme stará čísla. -->
+  <script>
+  (function () {
+    var el = {};
+    document.querySelectorAll('[data-ucet]').forEach(function (n) { el[n.dataset.ucet] = n; });
+
+    var koruny = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
+    var datum = new Intl.DateTimeFormat('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' });
+
+    function napis(text) { el.stav.textContent = text; }
+
+    function vypis(data) {
+      el.zustatek.textContent = koruny.format(data.zustatek);
+      el.zustatek.classList.add('je-nacteno');
+
+      if (!data.transakce.length) {
+        napis('Účet zatím čeká na první příspěvek.');
+        return;
+      }
+
+      data.transakce.slice(0, 12).forEach(function (t) {
+        var r = el.radky.insertRow();
+        r.insertCell().textContent = datum.format(new Date(t.datum));
+        // jméno jde z cizího zdroje → vkládáme jako text, nikdy jako HTML
+        r.insertCell().textContent = t.jmeno;
+
+        var c = r.insertCell();
+        c.className = 'ucet__hodnota';
+        // znaménka ukazujeme jen když součet pohybů sedí se zůstatkem
+        c.textContent = (data.sedi && !t.prichozi ? '−' : '') + koruny.format(t.castka);
+      });
+
+      el.tabulka.hidden = false;
+      napis('Aktualizováno ' + datum.format(new Date(data.aktualizovano)) + ' přímo z účtu u MONETY.');
+
+      if (!data.uplnyVypis) {
+        el.pozn.textContent = 'Zobrazujeme poslední příspěvky, celý výpis je na účtu u MONETY.';
+        el.pozn.hidden = false;
+      }
+    }
+
+    fetch('/api/ucet')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error(r.status)); })
+      .then(vypis)
+      .catch(function () {
+        el.zustatek.hidden = true;          // ať po částce nezůstane prázdné místo
+        napis('Aktuální zůstatek i všechny pohyby najdete přímo na účtu u MONETY.');
+      });
+  })();
+  </script>
 
   <!-- namíření hlav: ob jednu na srdíčko v textu, zbytek doprostřed QR -->
   <script>
