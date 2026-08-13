@@ -47,32 +47,32 @@
       <p class="donate__thanks">
         Každá koruna i sdílení má pro nás obrovský význam. Děkujeme, že jste.
       </p>
+
+      <!-- ===== PRŮBĚŽNÝ STAV SBÍRKY — živá data z transparentního účtu ===== -->
+      <section class="ucet" id="sbirka">
+        <p class="eyebrow">Průběžný stav sbírky</p>
+
+        <p class="ucet__castka" data-ucet="zustatek">&nbsp;</p>
+        <p class="ucet__stav" data-ucet="stav">Načítám aktuální stav účtu…</p>
+
+        <table class="ucet__tabulka" data-ucet="tabulka" hidden>
+          <caption class="ucet__popisek">Poslední příspěvky</caption>
+          <thead>
+            <tr><th scope="col">Datum</th><th scope="col">Dárce</th><th scope="col">Částka</th></tr>
+          </thead>
+          <tbody data-ucet="radky"></tbody>
+        </table>
+
+        <p class="ucet__pozn" data-ucet="pozn" hidden></p>
+
+        <a class="ucet__odkaz" href="https://transparentniucty.moneta.cz/284051001"
+           target="_blank" rel="noopener noreferrer">
+          Zobrazit celý účet u MONETY
+        </a>
+      </section>
     </aside>
 
   </main>
-
-  <!-- ===== PRŮBĚŽNÝ STAV SBÍRKY — živá data z transparentního účtu ===== -->
-  <section class="ucet" id="sbirka">
-    <p class="eyebrow">Průběžný stav sbírky</p>
-
-    <p class="ucet__castka" data-ucet="zustatek">&nbsp;</p>
-    <p class="ucet__stav" data-ucet="stav">Načítám aktuální stav účtu…</p>
-
-    <table class="ucet__tabulka" data-ucet="tabulka" hidden>
-      <caption class="ucet__popisek">Poslední příspěvky</caption>
-      <thead>
-        <tr><th scope="col">Datum</th><th scope="col">Dárce</th><th scope="col">Částka</th></tr>
-      </thead>
-      <tbody data-ucet="radky"></tbody>
-    </table>
-
-    <p class="ucet__pozn" data-ucet="pozn" hidden></p>
-
-    <a class="ucet__odkaz" href="https://transparentniucty.moneta.cz/284051001"
-       target="_blank" rel="noopener noreferrer">
-      Zobrazit celý účet u MONETY
-    </a>
-  </section>
 
   <footer class="paticka">
     <p>
@@ -143,7 +143,8 @@
         return;
       }
 
-      data.transakce.slice(0, 12).forEach(function (t) {
+      // ve sloupci vedle QR se vejde jen pár řádků, zbytek je na MONETĚ
+      data.transakce.slice(0, 6).forEach(function (t) {
         var r = el.radky.insertRow();
         r.insertCell().textContent = datum.format(new Date(t.datum));
         // jméno jde z cizího zdroje → vkládáme jako text, nikdy jako HTML
