@@ -64,6 +64,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* podklad stránky (přetečení scrollu, plocha pod obsahem) — ať nikde
+   neprosvítá světlý papír, ztmavení scény ho totiž nepřekrývá */
+html { background: #14110d; }
+
 body {
   font-family: var(--font-text);
   background: var(--papir);
@@ -298,17 +302,16 @@ img { max-width: 100%; display: block; }
   border-color: rgba(236,230,216,0.55);
 }
 
-/* ===== PATIČKA ===== */
-.paticka {
+/* ===== PODPIS AUTORA (uvnitř tmavého panelu, ne zvláštní lišta) ===== */
+.podpis {
   position: relative;
   z-index: 50;
-  background: #14110d;
+  margin-top: clamp(20px, 3vh, 32px);
   color: #7d7566;
   text-align: center;
-  padding: 26px 22px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
 }
-.paticka a { color: #a89f8d; }
+.podpis a { color: #a89f8d; }
 
 /* ===== MOBIL: sloupce pod sebe, povolit scroll ===== */
 @media (max-width: 820px) {
